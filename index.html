@@ -2,6 +2,8 @@
   <head>
     <title>NinjaMan</title>
     <script src="./js/random.js"></script>
+    <script src="./js/moverPumpkin.js"></script>
+
     <style>
       * {
         margin: 0;
@@ -52,30 +54,79 @@
         background-size: contain;
         position: absolute;
       }
+
+      #orange {
+        background-color: black;
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        background-image: url(./img/pumpky.gif);
+        background-size: contain;
+        position: absolute;
+      }
+
+      #pinky {
+        background-color: black;
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        background-image: url(./img/pinky.gif);
+        background-size: contain;
+        position: absolute;
+      }
+
+      #red {
+        background-color: black;
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        background-image: url(./img/red.gif);
+        background-size: contain;
+        position: absolute;
+      }
+
+      #blue {
+        background-color: black;
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        background-image: url(./img/bluey.gif);
+        background-size: contain;
+        position: absolute;
+      }
     </style>
   </head>
   <body>
     <div id="world"></div>
     <div id="ninjaman"></div>
+    <div id="orange"></div>
+    <div id="pinky"></div>
+    <div id="red"></div>
+    <div id="blue"></div>
   </body>
   <script type="text/javascript">
     var worldInit = [
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ];
 
     var score = 0;
 
     var worldVacio = mapaAleatorio(worldInit);
     var world = llenarMapa(worldVacio);
+
+    console.log(world);
 
     var worldDict = {
       0: "blank",
@@ -105,9 +156,24 @@
       y: 1,
     };
 
-    var ninjamanInit = {
+    var orange = {
+      x: 11,
+      y: 11,
+    };
+
+    var pinky = {
       x: 1,
+      y: 11,
+    };
+
+    var red = {
+      x: 11,
       y: 1,
+    };
+
+    var blue = {
+      x: 6,
+      y: 6,
     };
 
     function drawNinjaman() {
@@ -115,6 +181,55 @@
       document.getElementById("ninjaman").style.left = ninjaman.x * 40 + "px";
     }
     drawNinjaman();
+
+    function drawOrange() {
+      document.getElementById("orange").style.top = orange.y * 40 + "px";
+      document.getElementById("orange").style.left = orange.x * 40 + "px";
+    }
+    drawOrange();
+
+    function drawPinky() {
+      document.getElementById("pinky").style.top = pinky.y * 40 + "px";
+      document.getElementById("pinky").style.left = pinky.x * 40 + "px";
+    }
+    drawPinky();
+
+    function drawRed() {
+      document.getElementById("red").style.top = red.y * 40 + "px";
+      document.getElementById("red").style.left = red.x * 40 + "px";
+    }
+    drawRed();
+
+    function drawBlue() {
+      document.getElementById("blue").style.top = blue.y * 40 + "px";
+      document.getElementById("blue").style.left = blue.x * 40 + "px";
+    }
+    drawBlue();
+    
+    setInterval(moverOrange, 350);
+    setInterval(moverPinky, 300);
+    setInterval(moverRed, 250);
+    setInterval(moverBlue, 200);
+    
+    function moverOrange(){
+      orange = movimiento(orange, world);
+      drawOrange();
+    }
+
+    function moverPinky(){
+      pinky = movimiento(pinky, world);
+      drawPinky();
+    }
+
+    function moverRed(){
+      red = movimiento(red, world);
+      drawRed();
+    }
+
+    function moverBlue(){
+      blue = movimiento(blue, world);
+      drawBlue();
+    }
 
     document.onkeydown = function (e) {
       console.log(e);
