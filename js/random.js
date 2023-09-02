@@ -3,7 +3,7 @@ function mapaAleatorio(worldInit) {
     for (let x = 0; x < 13; x++) {
       if (worldInit[y][x] == 0) {
         let numeroAleatorio = Math.random();
-        if (numeroAleatorio > 0.5) {
+        if (numeroAleatorio > 0.6) {
           worldInit[y][x] = 1;
         }
       }
@@ -18,7 +18,7 @@ function llenarMapa(worldVacio) {
     for (let x = 0; x < 13; x++) {
       if (worldVacio[y][x] == 0) {
         const numeroAleatorio = Math.random();
-        if (numeroAleatorio < 0.6) {
+        if (numeroAleatorio < 0.3) {
           worldVacio[y][x] = 2;
         } else {
           worldVacio[y][x] = 3;
