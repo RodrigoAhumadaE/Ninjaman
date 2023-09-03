@@ -20,6 +20,19 @@
         display: inline-block;
       }
 
+      #game-over{
+        position: absolute;
+        top: 25%;
+        left: 8%;
+        width: 300px;
+        height: 150px;
+        background-color: black;
+        color: white;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
       .blank {
         background-color: black;
         height: 40px;
@@ -43,6 +56,25 @@
         display: inline-block;
         background-image: url(./img/onigiri.png);
         background-size: contain;
+      }
+
+      .score{
+        position: absolute;
+        top: 0;
+        left: 2%;
+        width: 120px;
+        background-color: blue;
+        color: white;
+      }
+
+      .lives{
+        position: absolute;
+        top: 0;
+        left: 43%;
+        width: 120px;
+        text-align: right;
+        background-color: blue;
+        color: white;
       }
 
       #ninjaman {
@@ -103,6 +135,10 @@
     <div id="pinky"></div>
     <div id="red"></div>
     <div id="blue"></div>
+    <div id="game-over" style="display: none;" >
+      <h2 class="mensaje">Game Over</h2>
+      <button class="reiniciar" onclick={ocultarDiv()}>Reiniciar</button>
+    </div>
   </body>
   <script type="text/javascript">
     var worldInit = [
@@ -122,6 +158,7 @@
     ];
 
     var score = 0;
+    var lives = 3;
 
     var worldVacio = mapaAleatorio(worldInit);
     var world = llenarMapa(worldVacio);
@@ -145,8 +182,9 @@
         }
         output += "</div>";
       }
-      output += "<h3>Score: " + score + "</h3>";
-
+      output += `<h3 class='score'>Score: ${score}</h3>`;
+      output += `<h3 class='lives'>Lives: ${lives}</h3>`;
+      
       document.getElementById("world").innerHTML = output;
     }
     drawWorld();
@@ -155,7 +193,7 @@
       x: 1,
       y: 1,
     };
-
+    
     var orange = {
       x: 11,
       y: 11,
@@ -175,6 +213,15 @@
       x: 6,
       y: 6,
     };
+
+    function ocultarDiv() {
+      const div = document.getElementById("game-over").style.display = "none";
+      location.reload();
+    }
+
+    function mostrarDiv() {
+      const div = document.getElementById("game-over").style.display = "flex";
+    }
 
     function drawNinjaman() {
       document.getElementById("ninjaman").style.top = ninjaman.y * 40 + "px";
@@ -214,21 +261,35 @@
     function moverOrange(){
       orange = movimiento(orange, world);
       drawOrange();
+      perderVidas(orange);
     }
 
     function moverPinky(){
       pinky = movimiento(pinky, world);
       drawPinky();
+      perderVidas(pinky);
     }
 
     function moverRed(){
       red = movimiento(red, world);
       drawRed();
+      perderVidas(pinky);
     }
 
     function moverBlue(){
       blue = movimiento(blue, world);
       drawBlue();
+      perderVidas(blue);
+    }
+
+    function perderVidas(pumpkin){
+      if(pumpkin.x == ninjaman.x && pumpkin.y == ninjaman.y && lives > 0){
+        lives--;
+        drawWorld()
+      }
+      if(lives == 0){
+        mostrarDiv();
+      }
     }
 
     document.onkeydown = function (e) {

@@ -78,5 +78,6 @@ function movimiento(pumpkin, world) {
       sentido = "-";
     }
   }
+
   return pumpkin;
 }
